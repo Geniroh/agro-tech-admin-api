@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth.routes";
+import innovationRoutes from "./routes/innovation.routes";
+import featuredPostRoutes from "./routes/posts.routes";
 import { handleErrorsMiddleware } from "./middleware/errorHandler";
 
 const app = express();
@@ -9,9 +12,12 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(handleErrorsMiddleware);
 
 app.use("/auth", authRoutes);
+app.use("/innovation", innovationRoutes);
+app.use("/featured", featuredPostRoutes);
 
 app.post("/test", (req: Request, res: Response) => {
   console.log(req.body);

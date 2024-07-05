@@ -1,14 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import Admin from "../models/admin.model";
-import { registerAdminDto } from "../dto/admin";
+import { registerAdminDto } from "../dto/admin.dto";
 import bcrypt from "bcryptjs";
 import { ADMIN_ROLE } from "../enum/admin.enum";
 import jwt from "jsonwebtoken";
 
+interface CustomRequest extends Request {
+  user?: jwt.JwtPayload | string;
+}
+
 // Generate access and refresh tokens
 const generateTokens = (adminId: string) => {
   const accessToken = jwt.sign({ id: adminId }, process.env.JWT_SECRET!, {
-    expiresIn: "2d", // Access token expires in 2 days
+    expiresIn: "1d", // Access token expires in 2 days
   });
 
   const refreshToken = jwt.sign({ id: adminId }, process.env.JWT_SECRET!, {
@@ -78,7 +82,7 @@ export const loginAdmin = async (
 
     if (!isPasswordCorrect) {
       return res.status(404).json({
-        error: "User not found",
+        error: "Incorrect login credentials",
       });
     }
 
@@ -87,20 +91,37 @@ export const loginAdmin = async (
 
       res
         .cookie("access_token", accessToken, {
-          httpOnly: true,
-          maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
         })
         .cookie("refresh_token", refreshToken, {
           httpOnly: true,
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
         })
         .status(200)
-        .json(admin);
+        .json({ user: admin, token: accessToken });
     } else {
       next(new Error("No secret credential"));
     }
   } catch (err) {
     next(err);
+  }
+};
+
+export const authenticatedUser = async (req: CustomRequest, res: Response) => {
+  try {
+    if (req.user) {
+      const userId = (req.user as jwt.JwtPayload).id;
+      const admin = await Admin.findById(userId);
+      if (admin) {
+        res.status(200).json({ user: admin });
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    } else {
+      res.status(401).json({ error: "Not authenticated" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

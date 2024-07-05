@@ -5,15 +5,25 @@ interface CustomRequest extends Request {
   user?: JwtPayload | string;
 }
 
-const verifyToken = (req: CustomRequest, res: Response, next: NextFunction) => {
-  const token = req.cookies.access_token;
+export const verifyToken = (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: "Authorization header is missing" });
+  }
+
+  const token = authHeader.split(" ")[1]; // Remove "Bearer " from the token string
   if (!token) {
-    return res.status(401).json({ error: "You are not authenticated!" });
+    return res.status(401).json({ error: "Token is missing" });
   }
 
   const secret = process.env.JWT_SECRET;
   if (secret) {
-    jwt.verify(token, secret, (err: any, user: any) => {
+    jwt.verify(token, secret, (err, user) => {
       if (err) return res.status(403).json({ error: "Token is not valid!" });
       req.user = user;
       next();
