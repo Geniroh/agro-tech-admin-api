@@ -91,7 +91,7 @@ export const loginAdmin = async (
 
       res
         .cookie("access_token", accessToken, {
-          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+          maxAge: 1 * 24 * 60 * 60 * 1000,
         })
         .cookie("refresh_token", refreshToken, {
           httpOnly: true,

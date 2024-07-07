@@ -5,6 +5,7 @@ import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth.routes";
 import innovationRoutes from "./routes/innovation.routes";
 import featuredPostRoutes from "./routes/posts.routes";
+import uploadRoutes from "./routes/upload.routes";
 import { handleErrorsMiddleware } from "./middleware/errorHandler";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(handleErrorsMiddleware);
 app.use("/auth", authRoutes);
 app.use("/innovation", innovationRoutes);
 app.use("/featured", featuredPostRoutes);
+app.use("/upload", uploadRoutes);
 
 app.post("/test", (req: Request, res: Response) => {
   console.log(req.body);
