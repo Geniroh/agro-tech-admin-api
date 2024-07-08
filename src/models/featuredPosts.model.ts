@@ -2,7 +2,7 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 
 const featuredPostsSchema = new Schema(
   {
-    imgUrl: {
+    mediaUrl: {
       type: String,
       required: true,
     },

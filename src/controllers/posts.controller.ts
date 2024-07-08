@@ -21,6 +21,30 @@ export const addPost = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllPosts = async (req: Request, res: Response) => {
+  try {
+    const allPosts = await FeaturedPosts.find();
+
+    res.status(200).json(allPosts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getPostById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+
+    if (!id) res.status(400).json({ error: "Bad Request" });
+
+    const post = await FeaturedPosts.findById(id);
+
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const updatePost = async (req: Request, res: Response) => {
   try {
     const postId = req.params.id;

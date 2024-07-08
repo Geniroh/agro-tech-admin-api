@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const featuredPostsDto = Joi.object({
-  imgUrl: Joi.string().required(),
+  mediaUrl: Joi.string().required(),
   title: Joi.string().required(),
   tag: Joi.array().items(Joi.string()).required(),
 });
