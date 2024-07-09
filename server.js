@@ -10,6 +10,7 @@ const db_1 = require("./config/db");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const innovation_routes_1 = __importDefault(require("./routes/innovation.routes"));
 const posts_routes_1 = __importDefault(require("./routes/posts.routes"));
+const upload_routes_1 = __importDefault(require("./routes/upload.routes"));
 const errorHandler_1 = require("./middleware/errorHandler");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
@@ -20,6 +21,7 @@ app.use(errorHandler_1.handleErrorsMiddleware);
 app.use("/auth", auth_routes_1.default);
 app.use("/innovation", innovation_routes_1.default);
 app.use("/featured", posts_routes_1.default);
+app.use("/upload", upload_routes_1.default);
 app.post("/test", (req, res) => {
     console.log(req.body);
     res.json(req.body);

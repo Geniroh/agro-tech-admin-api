@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePost = exports.addPost = void 0;
+exports.updatePost = exports.getPostById = exports.getAllPosts = exports.addPost = void 0;
 const posts_dto_1 = require("../dto/posts.dto");
 const featuredPosts_model_1 = __importDefault(require("../models/featuredPosts.model"));
 const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,6 +32,29 @@ const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.addPost = addPost;
+const getAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allPosts = yield featuredPosts_model_1.default.find();
+        res.status(200).json(allPosts);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+exports.getAllPosts = getAllPosts;
+const getPostById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        if (!id)
+            res.status(400).json({ error: "Bad Request" });
+        const post = yield featuredPosts_model_1.default.findById(id);
+        res.status(200).json(post);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+exports.getPostById = getPostById;
 const updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const postId = req.params.id;

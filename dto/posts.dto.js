@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateFeaturedPostsDto = exports.featuredPostsDto = void 0;
 const joi_1 = __importDefault(require("joi"));
 exports.featuredPostsDto = joi_1.default.object({
-    imgUrl: joi_1.default.string().required(),
+    mediaUrl: joi_1.default.string().required(),
     title: joi_1.default.string().required(),
     tag: joi_1.default.array().items(joi_1.default.string()).required(),
 });
 exports.updateFeaturedPostsDto = joi_1.default.object({
-    imgUrl: joi_1.default.string().optional(),
+    mediaUrl: joi_1.default.string().optional(),
     title: joi_1.default.string().optional(),
     tag: joi_1.default.array().items(joi_1.default.string()).optional(),
 });

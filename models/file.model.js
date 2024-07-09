@@ -24,21 +24,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const featuredPostsSchema = new mongoose_1.Schema({
-    mediaUrl: {
+const fileSchema = new mongoose_1.Schema({
+    filename: {
         type: String,
+        trim: true,
         required: true,
+        unique: true,
     },
-    title: {
+    size: {
         type: String,
-        required: true,
     },
-    tag: {
-        type: [String],
+    url: {
+        type: String,
         required: true,
     },
 }, {
     timestamps: true,
 });
-const FeaturedPosts = mongoose_1.default.model("featuredPosts", featuredPostsSchema);
-exports.default = FeaturedPosts;
+const Files = mongoose_1.default.model("files", fileSchema);
+exports.default = Files;

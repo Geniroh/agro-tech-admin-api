@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const posts_controller_1 = require("../controllers/posts.controller");
+const upload_controller_1 = require("../controllers/upload.controller");
+const multer_1 = __importDefault(require("multer"));
 const router = express_1.default.Router();
-router.post("/", posts_controller_1.addPost);
-router.get("/", posts_controller_1.getAllPosts);
-router.get("/:id", posts_controller_1.getPostById);
-router.patch("/edit/:id", posts_controller_1.updatePost);
+const storage = multer_1.default.memoryStorage();
+const upload = (0, multer_1.default)({ storage });
+router.post("/", upload.single("file"), upload_controller_1.uploadFile);
 exports.default = router;
