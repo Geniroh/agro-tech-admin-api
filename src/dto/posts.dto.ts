@@ -7,7 +7,7 @@ export const featuredPostsDto = Joi.object({
 });
 
 export const updateFeaturedPostsDto = Joi.object({
-  imgUrl: Joi.string().optional(),
+  mediaUrl: Joi.string().optional(),
   title: Joi.string().optional(),
   tag: Joi.array().items(Joi.string()).optional(),
 });

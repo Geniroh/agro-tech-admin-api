@@ -25,7 +25,6 @@ function sanitizeFileName(fileName: string): string {
 }
 
 export const uploadFile = async (req: Request, res: Response) => {
-  console.log("REACHED");
   try {
     if (!req.file) {
       res.status(400).send("No file uploaded.");
@@ -57,7 +56,7 @@ export const uploadFile = async (req: Request, res: Response) => {
     const fileRecord = {
       name: originalname,
       size: size.toString(),
-      url: `https://${bucketName}.${process.env.DO_ENDPOINT}/${originalname}`,
+      url: `https://${bucketName}.nyc3.cdn.digitaloceanspaces.com/${uniqueFileName}`,
       uploadedAt: new Date(),
     };
     const newFile = await Files.create({
