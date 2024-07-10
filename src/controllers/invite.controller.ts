@@ -39,3 +39,33 @@ export const inviteAdmin = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Could not send invite" });
   }
 };
+
+export const checkInviteToken = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.query;
+
+    if (!email) {
+      res.status(400).json({
+        error: "Could not verify email",
+      });
+      return;
+    }
+
+    const tokenExists = await Invitation.findOne({ email });
+
+    if (tokenExists) {
+      const hasExpired = new Date(tokenExists.expires) < new Date();
+
+      if (hasExpired) {
+        res.json({ error: "Token has expired!" }).status(400);
+        return;
+      }
+
+      res.json({ approve: true }).status(200);
+    } else {
+      res.json({ approve: false }).status(200);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Could not send invite" });
+  }
+};

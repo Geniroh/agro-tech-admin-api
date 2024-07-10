@@ -1,39 +1,50 @@
-import nodemailer from "nodemailer";
-
-export async function sendMail(
-  subject: string,
-  toEmail: string,
-  token: string
-) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.NODEMAILER_EMAIL,
-      pass: process.env.NODEMAILER_PW,
-    },
-    from: "irochibuzor@gmail.com",
-  });
-
-  const mailOptions = {
-    from: process.env.NODEMAILER_EMAIL,
-    to: { name: `${toEmail}`, address: toEmail },
-    subject: "Stavmia",
-    html: myInvitation(toEmail, token),
-  };
-
-  transporter.sendMail(mailOptions, function (error: any) {
-    if (error) {
-      return { error: "Email not sent" };
-    } else {
-      return { message: "Email Sent" };
-    }
-  });
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendMail = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+function sendMail(subject, toEmail, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const transporter = nodemailer_1.default.createTransport({
+            service: "gmail",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.NODEMAILER_EMAIL,
+                pass: process.env.NODEMAILER_PW,
+            },
+            from: "irochibuzor@gmail.com",
+        });
+        const mailOptions = {
+            from: process.env.NODEMAILER_EMAIL,
+            to: { name: `${toEmail}`, address: toEmail },
+            subject: "Stavmia",
+            html: myInvitation(toEmail, token),
+        };
+        transporter.sendMail(mailOptions, function (error) {
+            if (error) {
+                return { error: "Email not sent" };
+            }
+            else {
+                return { message: "Email Sent" };
+            }
+        });
+    });
 }
-
-const myInvitation = (email: string, token: string) => {
-  return `
+exports.sendMail = sendMail;
+const myInvitation = (email, token) => {
+    return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
