@@ -67,3 +67,16 @@ export const updatePost = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const deletePost = async (req: Request, res: Response) => {
+  try {
+    const postId = req.params.id;
+    if (!postId) res.status(404).json({ error: "Post does not exists" });
+
+    const deletePost = await FeaturedPosts.findByIdAndDelete(postId);
+
+    res.status(200).json(deletePost);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

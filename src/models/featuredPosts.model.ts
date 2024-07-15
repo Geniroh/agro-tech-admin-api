@@ -14,6 +14,13 @@ const featuredPostsSchema = new Schema(
       type: [String],
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+    },
+    thumbnailImage: {
+      type: String,
+    },
   },
   {
     timestamps: true,
