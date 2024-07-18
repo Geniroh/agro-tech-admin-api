@@ -7,6 +7,7 @@ import innovationRoutes from "./routes/innovation.routes";
 import featuredPostRoutes from "./routes/posts.routes";
 import uploadRoutes from "./routes/upload.routes";
 import inviteRoutes from "./routes/invite.routes";
+import editRoutes from "./routes/edit.routes";
 import { handleErrorsMiddleware } from "./middleware/errorHandler";
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/innovation", innovationRoutes);
 app.use("/featured", featuredPostRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/invite", inviteRoutes);
+app.use("/edit-request", editRoutes);
 
 app.post("/test", (req: Request, res: Response) => {
   console.log(req.body);

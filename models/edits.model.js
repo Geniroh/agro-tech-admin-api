@@ -24,8 +24,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const featuredPostsSchema = new mongoose_1.Schema({
-    mediaUrl: {
+const editPostsSchema = new mongoose_1.Schema({
+    email: {
+        type: String,
+        required: true,
+    },
+    token: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    expires: {
+        type: Date,
+    },
+    status: {
         type: String,
         required: true,
     },
@@ -33,19 +45,12 @@ const featuredPostsSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    tag: {
-        type: [String],
-        required: true,
-    },
-    type: {
-        type: String,
-        required: true,
-    },
-    thumbnailImage: {
+    innovationId: {
         type: String,
     },
 }, {
     timestamps: true,
+    collection: "editInnovation",
 });
-const FeaturedPosts = mongoose_1.default.model("featuredPosts", featuredPostsSchema);
-exports.default = FeaturedPosts;
+const EditInnovation = mongoose_1.default.model("editInnovation", editPostsSchema);
+exports.default = EditInnovation;

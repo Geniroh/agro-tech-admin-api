@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePost = exports.getPostById = exports.getAllPosts = exports.addPost = void 0;
+exports.deletePost = exports.updatePost = exports.getPostById = exports.getAllPosts = exports.addPost = void 0;
 const posts_dto_1 = require("../dto/posts.dto");
 const featuredPosts_model_1 = __importDefault(require("../models/featuredPosts.model"));
 const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -77,3 +77,16 @@ const updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updatePost = updatePost;
+const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const postId = req.params.id;
+        if (!postId)
+            res.status(404).json({ error: "Post does not exists" });
+        const deletePost = yield featuredPosts_model_1.default.findByIdAndDelete(postId);
+        res.status(200).json(deletePost);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+exports.deletePost = deletePost;

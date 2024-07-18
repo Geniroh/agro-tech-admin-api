@@ -9,9 +9,13 @@ exports.featuredPostsDto = joi_1.default.object({
     mediaUrl: joi_1.default.string().required(),
     title: joi_1.default.string().required(),
     tag: joi_1.default.array().items(joi_1.default.string()).required(),
+    type: joi_1.default.string().required(),
+    thumbnailImage: joi_1.default.string().optional(),
 });
 exports.updateFeaturedPostsDto = joi_1.default.object({
     mediaUrl: joi_1.default.string().optional(),
     title: joi_1.default.string().optional(),
     tag: joi_1.default.array().items(joi_1.default.string()).optional(),
+    type: joi_1.default.string().optional(),
+    thumbnailImage: joi_1.default.string().optional(),
 });
